@@ -1,11 +1,57 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Мой первый сайт</title>
+    <title>Мой первый сайт с Python API</title>
+    <meta charset="UTF-8">
+    <style>
+        body { font-family: Arial, sans-serif; padding: 40px; background: #f5f5f5; }
+        .card { background: white; padding: 20px; border-radius: 10px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); margin-bottom: 20px; }
+        button { padding: 10px 20px; font-size: 16px; background: #007bff; color: white; border: none; border-radius: 5px; cursor: pointer; }
+        button:hover { background: #0056b3; }
+    </style>
 </head>
 <body>
-    <h1>🚀 Привет, мир!</h1>
-    <p>Это мой первый сайт, и он работает в интернете!</p>
-    <button style="padding: 10px 20px; font-size: 16px;">Нажми меня!</button>
+    <h1>🚀 Мой сайт + Python API</h1>
+    
+    <div class="card">
+        <h2>Статистика</h2>
+        <p id="stats">Загрузка...</p>
+        <button onclick="loadStats()">Обновить статистику</button>
+    </div>
+
+    <div class="card">
+        <h2>Сообщение от сервера</h2>
+        <p id="message">Нажми кнопку!</p>
+        <button onclick="loadMessage()">Получить сообщение</button>
+    </div>
+
+    <script>
+        async function loadStats() {
+            try {
+                const response = await fetch('http://127.0.0.1:8000/stats');
+                const data = await response.json();
+                document.getElementById('stats').innerHTML = `
+                    Пользователей: <strong>${data.users}</strong><br>
+                    Заказов: <strong>${data.orders}</strong><br>
+                    Выручка: <strong>${data.revenue}</strong>
+                `;
+            } catch (error) {
+                document.getElementById('stats').innerText = 'Ошибка загрузки :(';
+            }
+        }
+
+        async function loadMessage() {
+            try {
+                const response = await fetch('http://127.0.0.1:8000/message');
+                const data = await response.json();
+                document.getElementById('message').innerText = data.text;
+            } catch (error) {
+                document.getElementById('message').innerText = 'Ошибка :(';
+            }
+        }
+
+        // Загружаем статистику при открытии страницы
+        loadStats();
+    </script>
 </body>
 </html>
