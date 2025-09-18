@@ -28,7 +28,7 @@
     <script>
         async function loadStats() {
             try {
-                const response = await fetch('http://127.0.0.1:8000/stats');
+                const response = await fetch('https://my-test-project-ja47.onrender.com/stats');
                 const data = await response.json();
                 document.getElementById('stats').innerHTML = `
                     Пользователей: <strong>${data.users}</strong><br>
@@ -42,7 +42,7 @@
 
         async function loadMessage() {
             try {
-                const response = await fetch('http://127.0.0.1:8000/message');
+                const response = await fetch('https://my-test-project-ja47.onrender.com/message');
                 const data = await response.json();
                 document.getElementById('message').innerText = data.text;
             } catch (error) {
