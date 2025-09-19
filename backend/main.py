@@ -1,6 +1,16 @@
 from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
 
 app = FastAPI()
+
+# Разрешаем CORS — чтобы сайт мог обращаться к API
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 @app.get("/")
 def read_root():
@@ -17,5 +27,5 @@ def get_stats():
 @app.get("/message")
 def get_message():
     return {
-        "text": "Ты — молодец! Твой сайт теперь умеет общаться с сервером сосалкиных😊"
+        "text": "Ты — молодец! Твой сайт теперь умеет общаться с сервером 😊"
     }
